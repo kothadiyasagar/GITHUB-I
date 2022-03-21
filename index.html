@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/GITHUB-I/css/page.css">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+   <div id="navbar"></div> 
+   <div id="img"></div>
+</body>
+</html>
+<script type="module">
+    import header from "./compenents/header.js"
+    console.log(header)
+ let navbar=document.getElementById("navbar")
+ navbar.innerHTML=header();
+  let input_box= document.getElementById("search-input")
+  input_box.addEventListener('keypress',()=>{
+        getData(event);
+  })
+   const getData = async(e) =>{
+       try {
+        if(e.code==="Enter"){
+        let input=input_box.value
+        console.log(input)
+
+        let res = await fetch(`https://api.github.com/users/${input}/repos`)
+        let data = await res.json()
+         let aap=data[0].owner
+         
+         console.log(data[0].owner.avatar_url)
+         append(aap)
+       } 
+     } catch  (error){
+            console.log(error)
+       
+       }
+    }
+     function append(data){
+           let img=document.createElement("img")
+         img.src=data.avatar_url
+        document.getElementById("img").append(img)
+      
+     }
+     
+</script>
